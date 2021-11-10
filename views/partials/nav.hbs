@@ -1,6 +1,24 @@
-    <nav class=" container-fluid navbar navbar-light bg-light">
-        <form class="container-fluid justify-content-end" id="btn-col">
-            <button class="btn btn-outline-success me-2" type="button">LOGIN</button>
-            <button class="btn btn-sm btn-outline-secondary" type="button">REGISTER</button>
-        </form>
-    </nav>
+{{#if isLogin}}
+      <div class="col-2" >
+        <div class="btn-group">
+          <button class="btn btn-sm dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false" id="avatar">
+            <img src="/public/stylesheets/img/user2.svg" alt="img-avatar" class="img-avatar">
+          </button>
+          <ul class="dropdown-menu bg-warning" id="avatar">
+            <li id="drop-btn-nav"><img src="/public/stylesheets/img/ticket.svg" alt="ticket" class="img-drop"><a href="/addTicket" class="dropdownticket"><span>Add</span></a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li id="drop-btn-nav"><img src="/public/stylesheets/img/sign-out.svg" alt="logout" class="img-drop"><a href="/logout" class="dropdownticket"><span>Logout</span></a></li>
+          </ul>
+        </div>
+
+        {{else}}
+        <nav class="navbar navbar-light bg-light">
+          <form class="container-fluid justify-content-start">
+            <a href="/login"><button class="btn btn-outline-success me-2" type="button">LOGIN</button></a>
+            <a href="/register"><button class="btn btn-sm btn-outline-secondary" type="button">REGISTER</button></a>
+          </form>
+        </nav>
+         {{/if}}
+      </div>
+    </div>
+
