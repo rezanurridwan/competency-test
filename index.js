@@ -51,7 +51,7 @@ app.get ('/', function (request, response){
 
     response.render('index',{
         title : title,
-        isLogin
+        isLogin: request.session.isLogin
     })
 })
 app.get ('/login', function (request, response){
@@ -64,7 +64,6 @@ app.get ('/login', function (request, response){
 })
 
 app.post ('/login', function (request, response){
-
     const { email, password } = request.body
     if (email == '' || password == '') {
       request.session.message = {
@@ -74,33 +73,33 @@ app.post ('/login', function (request, response){
       return response.redirect('/login')
     }
 
-    const query = `SELECT *, MD5(password) AS password FROM users_tb WHERE email = "${email}" AND password="${password}"`
+    const query = `SELECT *, MD5 (password) AS password FROM users_tb WHERE email = "${email}" AND password="${password}"`
     dbConnection.getConnection(function (err, conn) {
       if (err) throw err;
       
       conn.query(query, function (err, results) {
           if (err) throw err
-          console.log(results)
-        // if (results.length == 0) {
-        //   request.session.message = {
-        //     type: 'danger',
-        //     message: 'Email and password does not exist or match'
-        //   }
-        //   response.redirect('/login')
-        // } else {
-        //   request.session.message = {
-        //     type: 'success',
-        //     message: 'Your Account Successfully To Load !!'
-        //   }
 
-        //   request.session.isLogin = true;
-        //   request.session.user = {
-        //     id: results[0].id,
-        //     email: results[0].email,
-        //     name: results[0].name,
-        //     photo: results[0].photo
-        //   }
-        // }
+        if (results.length == 0) {
+          request.session.message = {
+            type: 'danger',
+            message: 'Email and password does not exist or match'
+          }
+          response.redirect('/login')
+        } else {
+          request.session.message = {
+            type: 'success',
+            message: 'Your Account Successfully To Load !!'
+          }
+
+          request.session.isLogin = true;
+          request.session.user = {
+            id: results[0].id,
+            email: results[0].email,
+            name: results[0].name,
+            photo: results[0].photo
+          }
+        }
         return response.redirect('/')
       })
     })
