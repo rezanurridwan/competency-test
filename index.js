@@ -143,6 +143,15 @@ app.post('/register', function(request, response){
 
     });
 });
+app.get('/logout', function (request, response){
+    request.session.destroy()
+    response.redirect('/')
+})
+app.get('/addtask', function(request, response){
+    response.render('addtask', {
+        isLogin: request.session.isLogin
+    });
+});
 
 const server = http.createServer(app);
 const port = 3000;
