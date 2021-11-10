@@ -48,6 +48,7 @@ var isLogin = false;
 
 app.get ('/', function (request, response){
     const title = "Task Collections"
+    const query = `SELECT * FROM users_tb`
 
     response.render('index',{
         title : title,
