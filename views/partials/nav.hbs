@@ -1,4 +1,4 @@
-<div class="coontainer-fluid" id="container-nav">
+<div class="container-fluid" id="container-nav">
       <nav class="navbar navbar-light bg-light">
         <form class="container-fluid justify-content-end">
           {{#if isLogin}}
@@ -8,9 +8,9 @@
                 <img src="/public/img/user2.svg" alt="img-avatar" class="img-avatar">
                 </button>
                 <ul class="dropdown-menu bg-warning" id="avatar">
-                  <li id="drop-btn-nav"><img src="/public/img/address.svg" alt="ticket" class="img-drop" style="width: 20px;"><a href="/addtask"><span>Add</span></a></li>
+                  <li id="drop-btn-nav"><img src="/public/img/address.svg" alt="ticket" class="img-drop mr-3" style="width: 20px;"><a href="/addtask" style="color: aliceblue; text-decoration:none; margin-left:5px;"><span>Add</span></a></li>
                   <li><hr class="dropdown-divider"></li>
-                  <li id="drop-btn-nav"><img src="/public/img/sign-out.svg" alt="logout" class="img-drop" style="width: 20px;"><a href="/logout" ><span>Logout</span></a></li>
+                  <li id="drop-btn-nav"><img src="/public/img/sign-out.svg" alt="logout" class="img-drop mr-3" style="width: 20px;"><a href="/logout" style="color: aliceblue; text-decoration:none; margin-left:5px;"><span>Logout</span></a></li>
                 </ul>
             </div>
             {{else}}

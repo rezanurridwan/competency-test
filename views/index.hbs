@@ -1,15 +1,26 @@
-{{>header}}
-{{>nav}}
-{{#each collection}}
-<section class="mt-5">
-  <div class="card" style="width: 18rem;">
-    <img src="/public/img/school.svg" class="card-img-top" alt="...">
-    <div class="card-body">
-      <h5 class="card-title">{{this.name}}</h5>
-      <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-      <a href="#" class="btn btn-primary">Go somewhere</a>
-    </div>
+{{> header}}
+{{> nav}}
+
+<main>
+  <div class="d-flex flex-wrap justify-content-center m-3 p-2" id="container-big">
+    {{#each collection}}
+      <div class="card m-3" style="width: 18rem; border">
+        <div class="card-body text-start mb-3">
+          <h6 class="card-title">{{this.name}}</h6>
+        </div>
+        <div class="container">
+            <div class="row align-items-end">
+              <div class="col-8">
+                {{this.name}}
+              </div>
+              <div class="col-4">
+                <img src="/public/img/check.svg" alt="" style="width: 20px;">
+              </div>
+            </div>
+        </div>
+      </div>
+  {{/each}}
   </div>
-</section>
-{{/each}}
-{{>footer}}
+</main>
+
+{{> footer}}

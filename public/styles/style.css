@@ -6,3 +6,11 @@
     background-color: aliceblue;
     margin-bottom: 10px;
 }
+#container-main{
+    display: flex;
+}
+
+#container-detail {
+    width: 50%;
+    margin: 0 auto;
+}
