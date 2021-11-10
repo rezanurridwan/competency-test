@@ -6,15 +6,18 @@
     {{#each collection}}
       <div class="card m-3" style="width: 18rem; border">
         <div class="card-body text-start mb-3">
-          <h6 class="card-title">{{this.name}}</h6>
+          <img src="/public/img/list.svg" style="width: 30px;">
         </div>
         <div class="container">
             <div class="row align-items-end">
               <div class="col-8">
                 {{this.name}}
               </div>
+              <div class="col-8">
+                2/3 Done
+              </div>
               <div class="col-4">
-                <img src="/public/img/check.svg" alt="" style="width: 20px;">
+                <img src="/public/img/check.svg" alt="" style="width: 20px; float:right;">
               </div>
             </div>
         </div>
