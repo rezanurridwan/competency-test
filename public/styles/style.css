@@ -1,3 +1,13 @@
 #btn-col {
     margin-right: 30%;
 }
+
+.result {
+    background-color: aliceblue;
+    margin-bottom: 10px;
+}
+
+#container-detail{
+    width: 50%;
+    margin: 0 auto;
+}

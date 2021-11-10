@@ -6,25 +6,21 @@
     <div class="row">
         <div class="col-2">arrow back</div>
         <div class="col-8">detail</div>
-        <div class="col-2">
+        <div class="col-2">delete
         {{#if isLogin}}
-        <div class="text-end mb-2">
+        {{!-- <div class="text-end mb-2">
             <a href="#" class="btn-edit"><img src="/public/stylesheets/img/edit.svg" alt="logo edit" style="width: 20px;"></a>
             <a href="#" class="btn-delete"><img src="/public/stylesheets/img/trash.svg" alt="logo delete" style="width: 20px;"></a>
-        </div>
+        </div> --}}
         {{/if}}
         </div>
     </div>
-    <div class="addtask">add task</div>
-    <span>Add</span>
-    <input type="text" name="name">
-    <p>task 2</p>
-    <div class="result1">1</div>
-    <div class="result1">2</div>
-    <div class="result1">3</div>
-    <p>completed</p>
-    <div class="result1">1</div>
-    <div class="result1">2</div>
-    <div class="result1">3</div>
+    <form action="/addtask" method="POST">
+        <div class="addtask">add task</div>
+        <button>add</button>
+        <input type="text" name="name">
+        <input type="number" name="is_done">
+    </form>
+
 </div>
 {{>footer}}

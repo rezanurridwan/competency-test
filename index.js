@@ -48,8 +48,6 @@ var isLogin = false;
 
 app.get ('/', function (request, response){
     const title = "Task Collections"
-    const query = `SELECT * FROM users_tb`
-
     response.render('index',{
         title : title,
         isLogin: request.session.isLogin
@@ -63,7 +61,6 @@ app.get ('/login', function (request, response){
         isLogin
     })
 })
-
 app.post ('/login', function (request, response){
     const { email, password } = request.body
     if (email == '' || password == '') {
@@ -105,7 +102,6 @@ app.post ('/login', function (request, response){
       })
     })
 })
-
 app.get ('/register', function (request, response){
     const title = "Register"
 
@@ -153,6 +149,50 @@ app.get('/addtask', function(request, response){
         isLogin: request.session.isLogin
     });
 });
+
+
+app.post('/addtask', function(request, response){
+  const {name, user_id} = request.body
+
+      if (name == '' || user_id == '') {
+        request.session.message = {
+          type: 'danger',
+          message: 'Please insert all data !!'
+        }
+
+        response.redirect('/addtask')
+      }
+    
+      const query = `INSERT INTO collections_tb (name, is_done) VALUES ("${name}", ${user_id})`
+
+      dbConnection.getConnection(function (err, conn) {
+        if (err) throw err;
+     
+        conn.query(query, function (err, results) {
+          if (err) throw err;
+    
+          request.session.message = {
+            type: 'success',
+            message: 'Add movie has saccessfully'
+          }
+          response.redirect(`/detail/${results.insertId}`)
+        })
+      })
+});
+
+
+
+
+
+
+
+app.get('/addtask/:id', function (request, response) {
+  
+      response.render('detail', {
+        isLogin: request.session.isLogin,
+      })
+
+    })
 
 const server = http.createServer(app);
 const port = 3000;
