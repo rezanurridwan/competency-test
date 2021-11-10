@@ -47,12 +47,32 @@ const {response} = require('express');
 var isLogin = false;
 
 app.get ('/', function (request, response){
-    const title = "Task Collections"
-    response.render('index',{
-        title : title,
-        isLogin: request.session.isLogin
-    })
+  const query = `SELECT * FROM collections_tb`
+
+  dbConnection.getConnection(function (err, conn) {
+    if (err) throw err;
+
+    conn.query(query, function (err, results) {
+      if (err) throw err
+
+      const collection = []
+
+      for (let result of results) {
+        collection.push({
+          id: result.id,
+          name: result.name
+      });
+      
+    }
+
+      response.render('index', {
+        isLogin: request.session.isLogin,
+        collection
+      });
+    });
 })
+})
+
 app.get ('/login', function (request, response){
     const title = "Login"
 
@@ -149,12 +169,11 @@ app.get('/addtask', function(request, response){
         isLogin: request.session.isLogin
     });
 });
-
-
 app.post('/addtask', function(request, response){
-  const {name, user_id} = request.body
+  const {name} = request.body
+  const userId = request.session.user.id;
 
-      if (name == '' || user_id == '') {
+      if (name == '') {
         request.session.message = {
           type: 'danger',
           message: 'Please insert all data !!'
@@ -163,7 +182,7 @@ app.post('/addtask', function(request, response){
         response.redirect('/addtask')
       }
     
-      const query = `INSERT INTO collections_tb (name, is_done) VALUES ("${name}", ${user_id})`
+      const query = `INSERT INTO collections_tb (name) VALUES ("${name}")`
 
       dbConnection.getConnection(function (err, conn) {
         if (err) throw err;
@@ -173,11 +192,45 @@ app.post('/addtask', function(request, response){
     
           request.session.message = {
             type: 'success',
-            message: 'Add movie has saccessfully'
+            message: 'Add movie has successfully'
           }
           response.redirect(`/detail/${results.insertId}`)
         })
       })
+});
+
+app.get('/detail/:id', function (request, response) {
+  var id = request.params.id;
+
+  const query = `SELECT * FROM collections_tb WHERE id = ${id}`
+
+  dbConnection.getConnection(function (err, conn) {
+    if (err) throw err;
+
+    conn.query(query, function (err, results) {
+      if (err) throw err
+
+      const collection = {
+        id: results[0].id,
+        name: results[0].name
+      }
+
+      var isContentOwner = false
+
+      if (request.session.isLogin) {
+        if (request.session.user.id == results[0].user_id) {
+          isContentOwner = true
+        }
+      }
+
+      response.render('detail', {
+        isLogin: request.session.isLogin,
+        collection,
+        isContentOwner
+      })
+
+    })
+  })
 });
 
 
@@ -187,7 +240,7 @@ app.post('/addtask', function(request, response){
 
 
 app.get('/addtask/:id', function (request, response) {
-  
+
       response.render('detail', {
         isLogin: request.session.isLogin,
       })
