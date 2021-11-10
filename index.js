@@ -198,7 +198,6 @@ app.post('/addtask', function(request, response){
         })
       })
 });
-
 app.get('/detail/:id', function (request, response) {
   var id = request.params.id;
 
@@ -211,7 +210,7 @@ app.get('/detail/:id', function (request, response) {
       if (err) throw err
 
       const collection = {
-        id: results[0].id,
+        // id: results[0].id,
         name: results[0].name
       }
 
@@ -232,7 +231,31 @@ app.get('/detail/:id', function (request, response) {
     })
   })
 });
+app.get('/edit-detail/:id', function (request, response) {
+  const id = request.params.id
+  const title = "Edit Detail" 
 
+
+  const query = `SELECT * FROM collections_tb WHERE id = ${id}`
+
+  dbConnection.getConnection(function (err, conn) {
+    if (err) throw err;
+
+    conn.query(query, function (err, results) {
+      if (err) throw err
+
+      const collection = {
+        ...results[0],
+      }
+
+      response.render('editDetail', {
+        title,
+        isLogin: request.session.isLogin,
+        collection
+      })
+    })
+  })
+});
 
 
 
